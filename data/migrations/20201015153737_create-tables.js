@@ -64,7 +64,7 @@ exports.up = function(knex) {
             .onUpdate('CASCADE');    
     })
 
-    .createTable('recipe_ingredients', tbl => {
+    .createTable('recipes_ingredients', tbl => {
         tbl.increments('id');
         tbl.string('qty_amount', 32 ).notNullable();
         tbl.string('qty_type', 128).notNullable();
@@ -103,5 +103,14 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
+    return knex.schema
+        .dropTableIfExists('ratings')
+        .dropTableIfExists('recipes_ingredients')
+        .dropTableIfExists('recipes_tags')
+        .dropTableIfExists('instructions')
+        .dropTableIfExists('ingredients')
+        .dropTableIfExists('tags')
+        .dropTableIfExists('recipes')
+        .dropTableIfExists('users')
   
 };
