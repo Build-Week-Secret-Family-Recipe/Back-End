@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    
     "test": "cross-env DB_ENV=testing jest --watch",
     "server": "nodemon index.js",
     "start": "node index.js"
@@ -21,17 +20,22 @@
   },
   "homepage": "https://github.com/Build-Week-Secret-Family-Recipe/Back-End#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "cross-env": "^7.0.2",
     "express": "^4.17.1",
     "helmet": "^4.1.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.6",
-    "pg": "^8.4.1"
+    "knex-cleaner": "^1.3.1",
+    "pg": "^8.4.1",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "dotenv": "^8.2.0",
     "jest": "^26.5.3",
     "nodemon": "^2.0.5",
-    "sqlite": "^4.0.15"
+    "sqlite": "^4.0.15",
+    "supertest": "^5.0.0"
   }
 }
