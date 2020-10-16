@@ -1,4 +1,6 @@
 // Update with your config settings.
+const pgConnection =
+  process.env.DATABASE_URL || "postgresql://postgres@localhost/family-recipes";
 
 module.exports = {
   development: {
@@ -14,6 +16,11 @@ module.exports = {
     seeds: {
       directory: "./data/seeds",
     },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
+    },
   },
 
   testing: {
@@ -25,15 +32,16 @@ module.exports = {
       tableName: "dbmigrations",
     },
     seeds: { directory: "./data/seeds" },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run("PRAGMA foreign_keys = ON", done);
+      },
+    },
   },
 
   production: {
     client: "pg",
-    connection: {
-      database: "my_db",
-      user: "username",
-      password: "password",
-    },
+    connection: pgConnection,
     pool: {
       min: 2,
       max: 10,
