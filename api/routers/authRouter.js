@@ -47,9 +47,11 @@ router.post("/login", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res
-      .status(500)
-      .json({ message: "error inserting user into DB", error: err });
+    res.status(500).json({
+      apiCode: 500,
+      apiMessage: "Error getting user info from DB",
+      ...err,
+    });
   }
 });
 
