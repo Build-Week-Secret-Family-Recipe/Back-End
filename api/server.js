@@ -14,6 +14,7 @@ server.use(express.json());
 server.use("/api/auth", authRouter);
 
 server.get("/", (req, res) => {
+  res.send(`<h2>Server Running at Full Capacity. Lets Code</h2>`);
   res.json({ api: "up" });
 });
 
