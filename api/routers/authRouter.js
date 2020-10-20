@@ -3,12 +3,7 @@ const Auth = require("../models/authModel.js");
 const hashCrypt = require("bcryptjs"); 
 const { secret, jwt } = require("../utils/authUtils.js");
 
-/* BEG: CoolCat */
-router.get("/", (req, res) => {
-  res.send('Auth GET route works...');
-  res.json({ api: "up" });
-});
-/* END: CoolCat */
+
 
 router.post("/register", (req, res) => {
   const userData = req.body;

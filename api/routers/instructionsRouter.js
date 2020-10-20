@@ -39,18 +39,18 @@ router.post("/recipes/:id", (req, res) => {
 
 });
 
-// insert instructions for a NEW recipe (no PK exist yet)
-router.post('/', (req, res) => {
-  const schemeData = req.body;
+// // insert instructions for a NEW recipe (no PK exist yet)
+// router.post('/', (req, res) => {
+//   const schemeData = req.body;
 
-  Instructions.addRecipe(schemeData)
-  .then(scheme => {
-    res.status(201).json(scheme);
-  })
-  .catch (err => {
-    res.status(500).json({ message: 'Failed to create new scheme' });
-  });
-});
+//   Instructions.addRecipe(schemeData)
+//   .then(scheme => {
+//     res.status(201).json(scheme);
+//   })
+//   .catch (err => {
+//     res.status(500).json({ message: 'Failed to create new scheme' });
+//   });
+// });
 
  router.put("/:id", (req, res) => {
     const { id } = req.params;

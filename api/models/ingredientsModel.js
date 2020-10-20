@@ -1,5 +1,9 @@
 const db =require("../../data/db_config.js");
 
+function find() {
+    return db('ingredients');
+}
+
 function findById(id) {
     return db('ingredients').where({id}).first();
 }
@@ -25,5 +29,6 @@ function addIngredient(eagle13) {
     findById, 
     update,
     remove,
-    addIngredient
+    addIngredient, 
+    find
 }
