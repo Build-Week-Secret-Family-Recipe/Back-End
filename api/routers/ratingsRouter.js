@@ -1,10 +1,8 @@
 const router = require("express").Router();
-const Recipes = require("../models/recipesModel");
+const Ratings = require("../models/ratingsModel");
 
-router.get("/user/:id", (req, res) => {
-  const { id } = req.params;
-
-  Recipes.getRecipes(id)
+router.post("/insert", (req, res) => {
+  Ratings.addRating(req.body, req.body.recipes_id)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -12,32 +10,15 @@ router.get("/user/:id", (req, res) => {
       console.log(err);
       res.status(500).json({
         apiCode: 500,
-        apiMessage: "Error getting recipes info from DB",
+        apiMessage: "Error getting ratings info from DB",
         ...err,
       });
     });
 });
 
-router.post("/user/:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
-
-  Recipes.addRecipes(req.body, id)
-    .then((response) => {
-      res.status(201).json(response);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        apiCode: 500,
-        apiMessage: "Error getting recipes info from DB",
-        ...err,
-      });
-    });
-});
-
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  Recipes.deleteRecipes(id)
+  Ratings.deleteRating(id, req.body.recipes_id, req.body.users_id)
     .then((response) => {
       res.status(200).json(response);
     })
@@ -45,12 +26,28 @@ router.delete("/:id", (req, res) => {
       console.log(err);
       res.status(500).json({
         apiCode: 500,
-        apiMessage: "Error getting recipes info from DB",
+        apiMessage: "Error getting ratings info from DB",
         ...err,
       });
     });
 });
 
-// TODO: router Update Recipe
+router.put("/update/:id", (req, res) => {
+  const { id } = req.params;
+  Ratings.updateRating(id, req.body)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        apiCode: 500,
+        apiMessage: "Error getting ratings info from DB",
+        ...err,
+      });
+    });
+});
+
+// TODO: Get ratings for recipe
 
 module.exports = router;
