@@ -35,9 +35,6 @@ function addRecipeInstruction(instructionData) {
 function addRecipeIngredient(ingredientData) {
   return db("recipes_ingredients").insert(ingredientData);
 }
-function addRating(ratingData) {
-  return db("ratings").insert(ratingData);
-}
 
 // Add Recipe
 
