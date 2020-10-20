@@ -1,4 +1,4 @@
-const db = require("../../data/db_config");
+const db = require("../../data/db_config.js");
 
 async function getRecipes(userId) {
   try {
