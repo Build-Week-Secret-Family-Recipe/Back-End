@@ -64,11 +64,14 @@ async function addRecipes(recipeData, user_id) {
         });
     }
 
-    // addInstruction(recipeData.ingredients);
     return id;
   } catch (err) {
     throw err;
   }
 }
 
-module.exports = { getRecipes, addRecipes };
+function deleteRecipes(recipeId) {
+  return db("recipes").where("id", recipeId).del();
+}
+
+module.exports = { getRecipes, addRecipes, deleteRecipes };

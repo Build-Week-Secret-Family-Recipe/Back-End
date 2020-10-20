@@ -55,4 +55,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// TODO: logout and update user info, restriction middleware
+
 module.exports = router;
