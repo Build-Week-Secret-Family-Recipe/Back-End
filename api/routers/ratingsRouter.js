@@ -48,4 +48,6 @@ router.put("/update/:id", (req, res) => {
     });
 });
 
+// TODO: Get ratings for recipe
+
 module.exports = router;
