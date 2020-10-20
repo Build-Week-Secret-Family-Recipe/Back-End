@@ -29,21 +29,6 @@ function getRatings(recipeId) {
   return db("ratings").where("recipes_id", recipeId);
 }
 
-function add(instructions) {
-  return db('recipes')
-  .insert({
-      title:  instructions.title,
-      source: instructions.source,
-      prep_time: instructions.prep_time,
-      cook_time: instructions.cook_time,
-      servings: instructions.servings,
-      users_id: instructions.users_id
-  });
-}
 
-function addTag(eagle13) {
-  return db('tags')
-  .insert({ tag_name: eagle13.tag_name})
-}
 
 module.exports = { getRecipes, add, addTag };
