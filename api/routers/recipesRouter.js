@@ -35,4 +35,22 @@ router.post("/user/:id", (req, res) => {
     });
 });
 
+router.delete("/:id", (req, res) => {
+  const { id } = req.params;
+  Recipes.deleteRecipes(id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        apiCode: 500,
+        apiMessage: "Error getting recipes info from DB",
+        ...err,
+      });
+    });
+});
+
+// TODO: router Update Recipe
+
 module.exports = router;
