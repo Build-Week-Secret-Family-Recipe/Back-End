@@ -18,6 +18,23 @@ router.get("/user/:id", (req, res) => {
     });
 });
 
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+
+  Recipes.getRecipesById(id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        apiCode: 500,
+        apiMessage: "Error getting recipes info from DB",
+        ...err,
+      });
+    });
+});
+
 router.post("/user/:id", (req, res) => {
   const { id } = req.params;
 
@@ -29,7 +46,7 @@ router.post("/user/:id", (req, res) => {
       console.log(err);
       res.status(500).json({
         apiCode: 500,
-        apiMessage: "Error getting recipes info from DB",
+        apiMessage: "Error adding recipes info from DB",
         ...err,
       });
     });
@@ -45,7 +62,23 @@ router.delete("/:id", (req, res) => {
       console.log(err);
       res.status(500).json({
         apiCode: 500,
-        apiMessage: "Error getting recipes info from DB",
+        apiMessage: "Error deleting recipes info from DB",
+        ...err,
+      });
+    });
+});
+
+router.put("/:id", (req, res) => {
+  const { id } = req.params;
+  Recipes.updateRecipe(id, req.body)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        apiCode: 500,
+        apiMessage: "Error updating recipes info from DB",
         ...err,
       });
     });
