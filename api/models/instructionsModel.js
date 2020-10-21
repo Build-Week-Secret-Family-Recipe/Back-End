@@ -30,37 +30,37 @@ function addInstructions(stepData, id) {
         .insert(fieldsToInsert)
 }
 
-// insert instructions for a NEW recipe (no PK exist yet)
-function addRecipe(instructions) {
-    return db('recipes')
-    .insert({
-        title:  instructions.title,
-        source: instructions.source,
-        prep_time: instructions.prep_time,
-        cook_time: instructions.cook_time,
-        servings: instructions.servings,
-        users_id: instructions.users_id
-    })
-    .returning('id') 
-    .then(function (response) {
-        if(instructions.instructions) {
-            const fieldsToInsert = instructions.instructions.map(field =>
-                ({ 
-                    "step": field.step,
-                    "instruction_text": field.instructions_text,
-                    "recipes_id": response[0]
-                }));
+// // insert instructions for a NEW recipe (no PK exist yet)
+// function addRecipe(instructions) {
+//     return db('recipes')
+//     .insert({
+//         title:  instructions.title,
+//         source: instructions.source,
+//         prep_time: instructions.prep_time,
+//         cook_time: instructions.cook_time,
+//         servings: instructions.servings,
+//         users_id: instructions.users_id
+//     })
+//     .returning('id') 
+//     .then(function (response) {
+//         if(instructions.instructions) {
+//             const fieldsToInsert = instructions.instructions.map(field =>
+//                 ({ 
+//                     "step": field.step,
+//                     "instruction_text": field.instructions_text,
+//                     "recipes_id": response[0]
+//                 }));
         
-                return db('instructions')
-                .insert(fieldsToInsert)
-        }
-    })
-  }
+//                 return db('instructions')
+//                 .insert(fieldsToInsert)
+//         }
+//     })
+//   }
 
 module.exports = {
     findById, 
     update,
     remove,
     addInstructions,
-    addRecipe, 
+    // addRecipe, 
 }
