@@ -1,5 +1,9 @@
 const db =require("../../data/db_config.js");
 
+function find() {
+    return db('tags');
+}
+
 function findById(id) {
     return db('tags').where({id}).first();
 }
@@ -24,5 +28,6 @@ function addTag(eagle13) {
     findById, 
     remove,
     addTag,
-    update
+    update, 
+    find
 }
