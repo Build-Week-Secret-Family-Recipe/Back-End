@@ -122,6 +122,118 @@ This endpoint will allow the creation of a new recipe linked to the user with id
 ```
 8 (id of the recipe)
 ```
+### (PUT) <SERVER_URL>/api/recipes/:recipe_id
+This endpoint will allow update the information of a sngle recipe with id **:recipe_id**
+- **title**: recipe name
+- **source**: who provided the recipe
+- **prep_time**: preparation time
+- **cook_time**: cook time
+- **servings**: how much servings will be done with the actual amount of ingredients
+- **image**: will be the recipe image after its done, for now will be null, **Stretch**
+- **share_link**: this will be the code to share for share recipes, for now null, **Stretch**
+
+**Add to the object the values that need to be updated**
+
+```
+{
+    "title": "Updated",
+    "source": "Update",
+    "prep_time": "10 minutes",
+    "cook_time": "10 minutes",
+    "servings": 6,
+    "image": null,
+    "share_link": null
+}
+```
+#### Response
+```
+{
+    "id": 9,
+    "title": "Updated",
+    "source": "Update",
+    "prep_time": "20 minutes",
+    "cook_time": "20 minutes",
+    "servings": 6,
+    "image": null,
+    "share_link": null,
+    "users_id": 1
+}
+```
+
+### (GET) <SERVER_URL>/api/recipes/:recipe_id
+This endpoint will retrieve the recipes defined by **:recipe_id**
+#### Response
+```
+[
+    {
+        "id": 7,
+        "title": "SDont Know the Name",
+        "source": "Aunt",
+        "prep_time": "10 minutes",
+        "cook_time": "10 minutes",
+        "servings": 6,
+        "image": null,
+        "share_link": null,
+        "users_id": 6,
+        "ratings": [
+            {
+                "id": 12,
+                "value": 6,
+                "comment": "hello i love this recipe",
+                "recipes_id": 7,
+                "users_id": 3
+            }
+        ],
+        "ingredients": [
+            {
+                "id": 17,
+                "qty_amount": "4",
+                "qty_type": "Cloves",
+                "recipes_id": 7,
+                "ingredients_id": 7,
+                "ingredient_name": "Garlic"
+            },
+            {
+                "id": 18,
+                "qty_amount": "1/2",
+                "qty_type": "tbsp",
+                "recipes_id": 7,
+                "ingredients_id": 8,
+                "ingredient_name": "Olive Oil"
+            },
+            {
+                "id": 19,
+                "qty_amount": "1",
+                "qty_type": "tbsp",
+                "recipes_id": 7,
+                "ingredients_id": 9,
+                "ingredient_name": "Butter"
+            }
+        ],
+        "instructions": [
+            {
+                "id": 11,
+                "step": 1,
+                "instruction_text": "Cut one large onion and 4 peppers put to aside.",
+                "recipes_id": 7
+            },
+            {
+                "id": 12,
+                "step": 2,
+                "instruction_text": "Place the sausage in a large skillet over medium heat, and brown on all sides. Remove from skillet,and slice.",
+                "recipes_id": 7
+            },
+            {
+                "id": 13,
+                "step": 3,
+                "instruction_text": "Melt butter and olive oil in the skillet. Stir in the onion and garlic and cook 2 to 3 minutes, add in bell peppers. Season with salt,black pepper, basil,and oregano.Continue to cook and stir until peppers and onions are tender.",
+                "recipes_id": 7
+            }
+        ]
+    }
+]
+```
+
 ### (GET) <SERVER_URL>/api/recipes/user/:user_id
 This endpoint will retrieve all the recipes for a particular user defined by **:user_id** in an array
 #### Response
@@ -204,8 +316,8 @@ This endpoint will allow delete an specific recipe with **:recipe_id**
     1 (rows that have being affected)
 }
 ```
-## Ratings
-### (GET) <SERVER_URL>/api/ratings/insert
+## Ratings Router
+### (POST) <SERVER_URL>/api/ratings/insert
 This endpoint will allow the insert of a new rating
 - **REQUIRED** - value: value from 1 to 5 of the rating
 - **REQUIRED** - comment: the comment that validate the value of user rating
@@ -241,7 +353,7 @@ will response with an array of all the ratings for that specific recipe
 ]
 ```
 
-### (GET) <SERVER_URL>/api/ratings/update/:rating_id
+### (PUT) <SERVER_URL>/api/ratings/update/:rating_id
 This endpoint will allow the update the information of an specific rating with id **:rating_id**
 - **REQUIRED** - value: value from 1 to 5 of the rating
 - **REQUIRED** - comment: the comment that validate the value of user rating
