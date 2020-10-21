@@ -1,19 +1,12 @@
-const router = require("express").Router(); 
-const Auth = require("../models/authModel.js"); 
-const hashCrypt = require("bcryptjs"); 
+const router = require("express").Router();
+const Auth = require("../models/authModel.js");
+const hashCrypt = require("bcryptjs");
 const { secret, jwt } = require("../utils/authUtils.js");
-
-/* BEG: CoolCat */
-router.get("/", (req, res) => {
-  res.send('Auth GET route works...');
-  res.json({ api: "up" });
-});
-/* END: CoolCat */
 
 router.post("/register", (req, res) => {
   const userData = req.body;
   const passwordWithHash = hashCrypt.hashSync(userData.password, 8);
-  
+
   userData.password = passwordWithHash;
   Auth.insertUser(userData)
     .then((response) => {
