@@ -1,5 +1,9 @@
 const db = require("../../data/db_config.js");
 
+function find() {
+  return db('recipes');
+}
+
 async function getRecipes(userId) {
   try {
     const recipes = await db("recipes").where("users_id", userId);
@@ -101,4 +105,5 @@ module.exports = {
   deleteRecipes,
   getRecipesById,
   updateRecipe,
+  find
 };

@@ -11,7 +11,7 @@ const ratingsRouter = require("./routers/ratingsRouter");
 const instructionsRouter = require("./routers/instructionsRouter");
 const tagsRouter = require("./routers/tagsRouter.js");
 const ingredientsRouter = require("./routers/ingrededientsRouter.js");
-const recipeTagsRouter = require("./routers/recipes_tagsRouter.js");
+
 
 // middleware
 const restrictedMiddleware = require("./middleware/restrictedMiddleware");

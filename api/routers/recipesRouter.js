@@ -1,6 +1,17 @@
 const router = require("express").Router();
 const Recipes = require("../models/recipesModel");
 
+router.get('/', (req, res) => {
+  Recipes.find()
+  .then(recipe => {
+    res.json(recipe);
+  })
+  .catch(err => {
+    res.status(500).json({ message: 'Failed to get recipe' });
+  });
+});
+
+
 router.get("/user/:id", (req, res) => {
   const { id } = req.params;
 
