@@ -13,7 +13,7 @@ const instructionsRouter = require("./routers/instructionsRouter");
 const tagsRouter = require("./routers/tagsRouter.js");
 const ingredientsRouter = require("./routers/ingrededientsRouter.js");
 const recipeIngredientsRouter = require("./routers/recipesIngredientsRouter");
-const recipeTagsRouter = require("./routers/recipesTagsRouter");
+
 
 // middleware
 const restrictedMiddleware = require("./middleware/restrictedMiddleware");
@@ -23,7 +23,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use("/api/auth", authRouter);
-server.use("/api/recipes", restrictedMiddleware, recipesRouter);
+server.use("/api/recipes",   restrictedMiddleware, recipesRouter);
 server.use("/api/ratings", restrictedMiddleware, ratingsRouter);
 // server.use("/api/instructions", recipesRouter);
 server.use("/api/instructions", restrictedMiddleware, instructionsRouter);
@@ -34,11 +34,10 @@ server.use(
   restrictedMiddleware,
   recipeIngredientsRouter
 );
-server.use("/api/recipe_tags", restrictedMiddleware, recipeTagsRouter);
 
-server.get("/", (req, res) => {
-  res.send(`<h2>Server Running at Full Capacity. Lets Code</h2>`);
-  res.json({ api: "up" });
+
+server.get("/users", (req, res) => {
+  res.json('all users sent');
 });
 
 module.exports = server;
