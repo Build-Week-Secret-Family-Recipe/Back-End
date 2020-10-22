@@ -1,5 +1,9 @@
 const db = require("../../data/db_config.js");
 
+function find() {
+  return db('recipes');
+}
+
 async function getRecipes(userId) {
   try {
     const recipes = await db("recipes").where("users_id", userId);
@@ -9,6 +13,19 @@ async function getRecipes(userId) {
       recipe.instructions = await getInstructions(recipe.id);
     }
     return recipes;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getRecipesById(recipeId) {
+  try {
+    const recipe = await db("recipes").where("id", recipeId).first();
+    const ratings = await getRatings(recipeId);
+    const ingredients = await getIngredients(recipeId);
+    const instructions = await getInstructions(recipeId);
+
+    return { recipe, ratings, ingredients, instructions };
   } catch (err) {
     throw err;
   }
@@ -70,8 +87,23 @@ async function addRecipes(recipeData, user_id) {
   }
 }
 
-function deleteRecipes(recipeId) {
+async function deleteRecipes(recipeId) {
+  await db("ratings").where("recipes_id", recipeId).del();
+  await db("instructions").where("recipes_id", recipeId).del();
+  await db("recipes_ingredients").where("recipes_id", recipeId).del();
   return db("recipes").where("id", recipeId).del();
 }
 
-module.exports = { getRecipes, addRecipes, deleteRecipes };
+async function updateRecipe(recipeId, recipeData) {
+  await db("recipes").where("id", recipeId).update(recipeData);
+  return db("recipes").where("id", recipeId).first();
+}
+
+module.exports = {
+  getRecipes,
+  addRecipes,
+  deleteRecipes,
+  getRecipesById,
+  updateRecipe,
+  find
+};
