@@ -18,8 +18,13 @@ async function updateRating(ratingId, ratingData) {
   return db("ratings").where("recipes_id", ratingData.recipes_id);
 }
 
+function getRating(recipeId) {
+  return db("ratings").where("recipes_id", recipeId);
+}
+
 module.exports = {
   addRating,
   deleteRating,
   updateRating,
+  getRating,
 };

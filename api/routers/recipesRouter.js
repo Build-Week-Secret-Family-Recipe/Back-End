@@ -84,6 +84,4 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// TODO: router Update Recipe
-
 module.exports = router;

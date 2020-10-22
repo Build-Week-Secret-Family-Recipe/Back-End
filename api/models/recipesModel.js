@@ -7,6 +7,7 @@ async function getRecipes(userId) {
       recipe.ratings = await getRatings(recipe.id);
       recipe.ingredients = await getIngredients(recipe.id);
       recipe.instructions = await getInstructions(recipe.id);
+      recipe.tags = await getTags(recipe.id);
     }
     return recipes;
   } catch (err) {
@@ -20,8 +21,9 @@ async function getRecipesById(recipeId) {
     const ratings = await getRatings(recipeId);
     const ingredients = await getIngredients(recipeId);
     const instructions = await getInstructions(recipeId);
+    const tags = await getTags(recipeId);
 
-    return { recipe, ratings, ingredients, instructions };
+    return { recipe, ratings, ingredients, instructions, tags };
   } catch (err) {
     throw err;
   }
@@ -42,11 +44,21 @@ function getRatings(recipeId) {
   return db("ratings").where("recipes_id", recipeId);
 }
 
+function getTags(recipeId) {
+  return db("recipes_tags as rt")
+    .join("tags as t", "rt.tags_id", "t.id")
+    .where("recipes_id", recipeId)
+    .select("rt.*", "t.tag_name");
+}
+
 function addRecipeInstruction(instructionData) {
   return db("instructions").insert(instructionData);
 }
 function addRecipeIngredient(ingredientData) {
   return db("recipes_ingredients").insert(ingredientData);
+}
+function addRecipeTag(tagData) {
+  return db("recipes_tags").insert(tagData);
 }
 
 // Add Recipe
@@ -69,6 +81,17 @@ async function addRecipes(recipeData, user_id) {
     for (const ingredient of recipeData["ingredients"]) {
       ingredient.recipes_id = id;
       addRecipeIngredient(ingredient)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
+    for (const tag of recipeData["tags"]) {
+      tag.recipes_id = id;
+      addRecipeTag(tag)
         .then((response) => {
           console.log(response);
         })
