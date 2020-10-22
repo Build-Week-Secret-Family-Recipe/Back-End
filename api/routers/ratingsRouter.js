@@ -48,6 +48,20 @@ router.put("/update/:id", (req, res) => {
     });
 });
 
-// TODO: Get ratings for recipe
+router.get("/recipe/:id", (req, res) => {
+  const { id } = req.params;
+  Ratings.getRating(id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        apiCode: 500,
+        apiMessage: "Error getting ratings info from DB",
+        ...err,
+      });
+    });
+});
 
 module.exports = router;
