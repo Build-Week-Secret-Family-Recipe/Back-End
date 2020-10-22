@@ -38,7 +38,7 @@ describe("server.js", () => {
     describe("registering new user", () => {
         it("should return with a status code of 201 when adding new user", async () => {
             await db("users").truncate() // clearing the tables
-            const res = await request.post("/api/auth")
+            const res = await request.post("/api/auth/")
             .send(testUser);
             expect(res.status).toBe(404)
         });
@@ -106,11 +106,24 @@ describe("server.js", () => {
             it("should return a status code of 400 when not logged in", async () => {
                 const res = await request.get("/api/ingredients");
                 expect(res.status).toBe(401);
-                // expect(1).toBe(1);
+             
             });
     
             it("should return json", async () => {
                 const res = await request.get("/api/ingredients");
+                expect(res.type).toBe("application/json")
+              });
+        });
+
+        describe("GET request for recipe_Ingredients ", () => {
+            it("should return a status code of 400 when not logged in", async () => {
+                const res = await request.get("/api/recipe_ingredients");
+                expect(res.status).toBe(401);
+                // expect(1).toBe(1);
+            });
+    
+            it("should return json", async () => {
+                const res = await request.get("/api/recipe_ingredients");
                 expect(res.type).toBe("application/json")
               });
         });
