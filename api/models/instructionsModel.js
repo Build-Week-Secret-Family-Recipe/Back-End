@@ -11,7 +11,7 @@ const update = async (changes, id) => {
 };
 
 async function remove(id) {
-  const res = db("instructions").where({ id });
+  const res = db("instructions").where({ id }).first();
   await db("instructions").where({ id }).del();
   return findById(res.recipes_id);
 }
