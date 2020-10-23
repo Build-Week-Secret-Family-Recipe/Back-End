@@ -29,7 +29,7 @@ router.post("/recipes/:id", (req, res) => {
       res.status(201).json(step);
     })
     .catch((err) => {
-      res.status(500).json({ message: "Failed to update step" });
+      res.status(500).json({ message: "Failed to create new step" });
     });
 });
 
@@ -50,17 +50,9 @@ router.put("/:id", (req, res) => {
   const { id } = req.params;
   const changes = req.body;
 
-  Instructions.findById(id)
-    .then((instruction) => {
-      if (instruction) {
-        Instructions.update(changes, id).then((updatedInstruction) => {
-          res.json(updatedInstruction);
-        });
-      } else {
-        res
-          .status(404)
-          .json({ message: "Could not find instruction with given id" });
-      }
+  Instructions.update(changes, id)
+    .then((updatedInstruction) => {
+      res.json(updatedInstruction);
     })
     .catch((err) => {
       res.status(500).json({ message: "Failed to update instruction" });
