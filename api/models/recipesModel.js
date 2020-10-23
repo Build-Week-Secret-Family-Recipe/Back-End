@@ -1,7 +1,18 @@
 const db = require("../../data/db_config.js");
 
 function find() {
-  return db('recipes');
+  try {
+    const recipes = await db("recipes");
+    for (const recipe of recipes) {
+      recipe.ratings = await getRatings(recipe.id);
+      recipe.ingredients = await getIngredients(recipe.id);
+      recipe.instructions = await getInstructions(recipe.id);
+      recipe.tags = await getTags(recipe.id);
+    }
+    return recipes;
+  } catch (err) {
+    throw err;
+  }
 }
 
 async function getRecipes(userId) {
