@@ -3,7 +3,9 @@ const Auth = require("../models/authModel.js");
 const hashCrypt = require("bcryptjs");
 const { secret, jwt } = require("../utils/authUtils.js");
 
-router.post("/register", (req, res) => {
+const bodyValidation = require("../middleware/bodyValidation");
+
+router.post("/register", bodyValidation("register"), (req, res) => {
   const userData = req.body;
   const passwordWithHash = hashCrypt.hashSync(userData.password, 8);
 
@@ -21,7 +23,7 @@ router.post("/register", (req, res) => {
     });
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", bodyValidation("login"), async (req, res) => {
   let { email, password } = req.body;
 
   try {

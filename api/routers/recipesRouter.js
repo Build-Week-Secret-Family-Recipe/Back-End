@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Recipes = require("../models/recipesModel");
 
+const bodyValidation = require("../middleware/bodyValidation");
+const idValidation = require("../middleware/idValidation");
+
 router.get("/", (req, res) => {
   Recipes.find()
     .then((recipe) => {
@@ -11,7 +14,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/user/:id", (req, res) => {
+router.get("/user/:id", idValidation("users"), (req, res) => {
   const { id } = req.params;
 
   Recipes.getRecipes(id)
@@ -28,7 +31,7 @@ router.get("/user/:id", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", idValidation("recipes"), (req, res) => {
   const { id } = req.params;
 
   Recipes.getRecipesById(id)
@@ -45,24 +48,29 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/user/:id", (req, res) => {
-  const { id } = req.params;
+router.post(
+  "/user/:id",
+  idValidation("users"),
+  bodyValidation("addRecipes"),
+  (req, res) => {
+    const { id } = req.params;
 
-  Recipes.addRecipes(req.body, id)
-    .then((response) => {
-      res.status(201).json(response);
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        apiCode: 500,
-        apiMessage: "Error adding recipes info from DB",
-        ...err,
+    Recipes.addRecipes(req.body, id)
+      .then((response) => {
+        res.status(201).json(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          apiCode: 500,
+          apiMessage: "Error adding recipes info from DB",
+          ...err,
+        });
       });
-    });
-});
+  }
+);
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", idValidation("recipes"), (req, res) => {
   const { id } = req.params;
   Recipes.deleteRecipes(id)
     .then((response) => {
@@ -78,7 +86,7 @@ router.delete("/:id", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", idValidation("recipes"), (req, res) => {
   const { id } = req.params;
   Recipes.updateRecipe(id, req.body)
     .then((response) => {

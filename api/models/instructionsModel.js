@@ -13,7 +13,6 @@ const update = async (changes, id) => {
 async function remove(id) {
   const res = await db("instructions").where({ id }).first();
   await db("instructions").where({ id }).del();
-  console.log(res);
   return findById(res.recipes_id);
 }
 
