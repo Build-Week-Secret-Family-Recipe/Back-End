@@ -11,8 +11,9 @@ const update = async (changes, id) => {
 };
 
 async function remove(id) {
+  const res = db("instructions").where({ id });
   await db("instructions").where({ id }).del();
-  return findById(id);
+  return findById(res.recipes_id);
 }
 
 // insert instructions for EXISTING recipe
