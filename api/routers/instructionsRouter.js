@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const Instructions = require("../models/instructionsModel.js");
 
-router.get("/:id", (req, res) => {
+const bodyValidation = require("../middleware/bodyValidation");
+
+const idValidation = require("../middleware/idValidation");
+
+router.get("/:id", idValidation("recipes"), (req, res) => {
   const { id } = req.params;
 
   Instructions.findById(id)
@@ -20,18 +24,23 @@ router.get("/:id", (req, res) => {
 });
 
 // insert instructions for EXISTING recipe
-router.post("/recipes/:id", (req, res) => {
-  const stepData = req.body;
-  const { id } = req.params;
+router.post(
+  "/recipes/:id",
+  idValidation("recipes"),
+  bodyValidation("addInstructions"),
+  (req, res) => {
+    const stepData = req.body;
+    const { id } = req.params;
 
-  Instructions.addInstructions(stepData, id)
-    .then((step) => {
-      res.status(201).json(step);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to create new step" });
-    });
-});
+    Instructions.addInstructions(stepData, id)
+      .then((step) => {
+        res.status(201).json(step);
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Failed to create new step" });
+      });
+  }
+);
 
 // // insert instructions for a NEW recipe (no PK exist yet)
 // router.post('/', (req, res) => {
@@ -46,20 +55,25 @@ router.post("/recipes/:id", (req, res) => {
 //   });
 // });
 
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const changes = req.body;
+router.put(
+  "/:id",
+  idValidation("instructions"),
+  bodyValidation("updateInstructions"),
+  (req, res) => {
+    const { id } = req.params;
+    const changes = req.body;
 
-  Instructions.update(changes, id)
-    .then((updatedInstruction) => {
-      res.json(updatedInstruction);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Failed to update instruction" });
-    });
-});
+    Instructions.update(changes, id)
+      .then((updatedInstruction) => {
+        res.json(updatedInstruction);
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "Failed to update instruction" });
+      });
+  }
+);
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", idValidation("instructions"), (req, res) => {
   const { id } = req.params;
 
   Instructions.remove(id)
