@@ -2,7 +2,7 @@ const { returning } = require("../../data/db_config.js");
 const db = require("../../data/db_config.js");
 
 function findById(id) {
-  return db("instructions").where("recipes_id", id).first();
+  return db("instructions").where("recipes_id", id);
 }
 
 const update = async (changes, id) => {
