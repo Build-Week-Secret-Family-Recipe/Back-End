@@ -65,7 +65,7 @@ router.delete("/:id", (req, res) => {
   Instructions.remove(id)
     .then((deleted) => {
       if (deleted) {
-        res.json({ removed: deleted });
+        res.json(deleted);
       } else {
         res
           .status(404)
