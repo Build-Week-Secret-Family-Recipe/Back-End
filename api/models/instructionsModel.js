@@ -1,33 +1,27 @@
 const { returning } = require("../../data/db_config.js");
-const db =require("../../data/db_config.js");
+const db = require("../../data/db_config.js");
 
 function findById(id) {
-    return db('instructions').where({id}).first();
+  return db("instructions").where("recipes_id", id);
 }
 
 const update = async (changes, id) => {
-    const res = await db('instructions').where({ id }).update(changes);
-    return findById(id);
-}
+  const res = await db("instructions").where({ id }).update(changes);
+  return findById(changes.recipes_id);
+};
 
-function remove(id) {
-    return db('instructions')
-    .where({ id })
-    .del();
+async function remove(id) {
+  const res = await db("instructions").where({ id }).first();
+  await db("instructions").where({ id }).del();
+  return findById(res.recipes_id);
 }
 
 // insert instructions for EXISTING recipe
-function addInstructions(stepData, id) {
-    
-    const fieldsToInsert = stepData.instructions.map(field =>
-        ({ 
-            "step": field.step_number,
-            "instruction_text": field.instructions,
-            "recipes_id": id
-        }));
+async function addInstructions(stepData, id) {
+  stepData.recipes_id = id;
 
-        return db('instructions')
-        .insert(fieldsToInsert)
+  await db("instructions").insert(stepData);
+  return findById(id);
 }
 
 // // insert instructions for a NEW recipe (no PK exist yet)
@@ -41,16 +35,16 @@ function addInstructions(stepData, id) {
 //         servings: instructions.servings,
 //         users_id: instructions.users_id
 //     })
-//     .returning('id') 
+//     .returning('id')
 //     .then(function (response) {
 //         if(instructions.instructions) {
 //             const fieldsToInsert = instructions.instructions.map(field =>
-//                 ({ 
+//                 ({
 //                     "step": field.step,
 //                     "instruction_text": field.instructions_text,
 //                     "recipes_id": response[0]
 //                 }));
-        
+
 //                 return db('instructions')
 //                 .insert(fieldsToInsert)
 //         }
@@ -58,9 +52,9 @@ function addInstructions(stepData, id) {
 //   }
 
 module.exports = {
-    findById, 
-    update,
-    remove,
-    addInstructions,
-    // addRecipe, 
-}
+  findById,
+  update,
+  remove,
+  addInstructions,
+  // addRecipe,
+};
