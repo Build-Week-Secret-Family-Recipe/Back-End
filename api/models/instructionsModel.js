@@ -16,13 +16,9 @@ function remove(id) {
 
 // insert instructions for EXISTING recipe
 function addInstructions(stepData, id) {
-  const fieldsToInsert = stepData.instructions.map((field) => ({
-    step: field.step,
-    instruction_text: field.instruction_text,
-    recipes_id: id,
-  }));
+  stepData.recipes_id = id;
 
-  return db("instructions").insert(fieldsToInsert);
+  return db("instructions").insert(stepData);
 }
 
 // // insert instructions for a NEW recipe (no PK exist yet)
