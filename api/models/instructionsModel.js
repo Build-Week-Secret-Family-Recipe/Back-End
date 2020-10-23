@@ -7,7 +7,7 @@ function findById(id) {
 
 const update = async (changes, id) => {
   const res = await db("instructions").where({ id }).update(changes);
-  return findById(id);
+  return findById(changes.recipes_id);
 };
 
 async function remove(id) {
