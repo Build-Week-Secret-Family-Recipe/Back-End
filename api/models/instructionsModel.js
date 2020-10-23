@@ -17,8 +17,8 @@ function remove(id) {
 // insert instructions for EXISTING recipe
 function addInstructions(stepData, id) {
   const fieldsToInsert = stepData.instructions.map((field) => ({
-    step: field.step_number,
-    instruction_text: field.instructions,
+    step: field.step,
+    instruction_text: field.instruction_text,
     recipes_id: id,
   }));
 
