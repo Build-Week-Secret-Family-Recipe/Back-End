@@ -1,6 +1,6 @@
 const db = require("../../data/db_config.js");
 
-function find() {
+async function find() {
   try {
     const recipes = await db("recipes");
     for (const recipe of recipes) {
@@ -139,5 +139,5 @@ module.exports = {
   deleteRecipes,
   getRecipesById,
   updateRecipe,
-  find
+  find,
 };
