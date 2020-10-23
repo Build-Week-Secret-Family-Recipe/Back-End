@@ -10,15 +10,17 @@ const update = async (changes, id) => {
   return findById(id);
 };
 
-function remove(id) {
-  return db("instructions").where({ id }).del();
+async function remove(id) {
+  await db("instructions").where({ id }).del();
+  return findById(id);
 }
 
 // insert instructions for EXISTING recipe
-function addInstructions(stepData, id) {
+async function addInstructions(stepData, id) {
   stepData.recipes_id = id;
 
-  return db("instructions").insert(stepData);
+  await db("instructions").insert(stepData);
+  return findById(id);
 }
 
 // // insert instructions for a NEW recipe (no PK exist yet)
