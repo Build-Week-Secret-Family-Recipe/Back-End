@@ -13,7 +13,7 @@ const instructionsRouter = require("./routers/instructionsRouter");
 const tagsRouter = require("./routers/tagsRouter.js");
 const ingredientsRouter = require("./routers/ingrededientsRouter.js");
 const recipeIngredientsRouter = require("./routers/recipesIngredientsRouter");
-
+const recipeTagsRouter = require("./routers/recipesTagsRouter");
 
 // middleware
 const restrictedMiddleware = require("./middleware/restrictedMiddleware");
@@ -34,6 +34,8 @@ server.use(
   restrictedMiddleware,
   recipeIngredientsRouter
 );
+server.use("/api/recipe_tags", restrictedMiddleware, recipeTagsRouter);
+
 
 
 server.get("/users", (req, res) => {
