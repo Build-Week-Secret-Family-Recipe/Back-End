@@ -25,7 +25,7 @@ server.use(express.json());
 server.use("/api/auth", authRouter);
 server.use("/api/recipes",   restrictedMiddleware, recipesRouter);
 server.use("/api/ratings", restrictedMiddleware, ratingsRouter);
-// server.use("/api/instructions", recipesRouter);
+
 server.use("/api/instructions", restrictedMiddleware, instructionsRouter);
 server.use("/api/tags", restrictedMiddleware, tagsRouter);
 server.use("/api/ingredients", restrictedMiddleware, ingredientsRouter);
